@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hanam City AI Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f9f9fb",
+                        "on-tertiary-fixed-variant": "#004e59",
+                        "on-primary-fixed-variant": "#00458f",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#636264",
+                        "secondary": "#5f5e60",
+                        "primary-container": "#0071e3",
+                        "on-surface-variant": "#414753",
+                        "surface-container-high": "#e8e8ea",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#e2dfe1",
+                        "on-background": "#1a1c1d",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#006573",
+                        "inverse-on-surface": "#f0f0f2",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "surface-variant": "#e2e2e4",
+                        "surface-tint": "#005cbb",
+                        "inverse-surface": "#2f3132",
+                        "surface-dim": "#d9dadc",
+                        "on-primary": "#ffffff",
+                        "outline": "#717785",
+                        "on-tertiary-container": "#f6fdff",
+                        "on-primary-fixed": "#001b3f",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#a1efff",
+                        "on-secondary-fixed-variant": "#474649",
+                        "background": "#f9f9fb",
+                        "surface": "#f9f9fb",
+                        "on-secondary": "#ffffff",
+                        "primary": "#0059b5",
+                        "surface-container": "#eeeef0",
+                        "surface-container-highest": "#e2e2e4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "on-surface": "#1a1c1d",
+                        "tertiary-container": "#008091",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary-fixed": "#e4e2e4",
+                        "inverse-primary": "#abc7ff",
+                        "tertiary-fixed-dim": "#44d8f1",
+                        "outline-variant": "#c1c6d6",
+                        "surface-container-low": "#f3f3f5",
+                        "on-tertiary-fixed": "#001f25",
+                        "on-primary-container": "#fcfbff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "SF Pro", "sans-serif"],
+                        "body": ["Inter", "SF Pro", "sans-serif"],
+                        "label": ["Inter", "SF Pro", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', 'SF Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .hero-title {
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+        .custom-shadow {
+            box-shadow: 0 5px 30px rgba(0,0,0,0.22);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full h-[48px] z-50 glass-nav flex items-center justify-between px-10 max-w-full">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<!-- Branding Anchor: Teal/Blue Original Colors -->
+<span class="text-xl font-bold tracking-tighter text-[#00b2b2]">하남시</span>
+<span class="text-[12px] font-semibold tracking-wider uppercase text-white/90">AI Library</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-[12px] font-semibold tracking-wider uppercase text-white/90 hover:text-blue-400 transition-colors duration-200" href="#">Notice</a>
+<a class="text-[12px] font-semibold tracking-wider uppercase text-white/90 hover:text-blue-400 transition-colors duration-200" href="#">AI Policy Radar</a>
+<a class="text-[12px] font-semibold tracking-wider uppercase text-white/90 hover:text-blue-400 transition-colors duration-200" href="#">Hanam Wiki</a>
+<a class="text-[12px] font-semibold tracking-wider uppercase text-white/90 hover:text-blue-400 transition-colors duration-200" href="#">Employee Board</a>
+<a class="text-[12px] font-semibold tracking-wider uppercase text-blue-500 font-bold" href="#">AI Toolbox</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-white/90 hover:text-blue-400 transition-transform active:opacity-80 scale-95">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section (Binary Rhythm: Dark) -->
+<section class="bg-black min-h-[921px] flex flex-col items-center justify-center pt-[48px] px-6 text-center">
+<div class="max-w-[980px] w-full flex flex-col items-center gap-12">
+<h1 class="hero-title text-[56px] font-semibold text-white max-w-2xl">
+                하남시 행정의<br/>새로운 기준.
+            </h1>
+<div class="w-full relative h-[400px] rounded-2xl overflow-hidden mb-12">
+<img class="w-full h-full object-cover opacity-60" data-alt="cinematic visualization of high-tech digital data streams flowing through a dark space with blue and white highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN7a6fEWxMzE9iINg1adMV3cecF02y7RyheD24mfQej2jsbIf9yBYGuNt41vcKz3E-BSQaMNeD2n8d3bopV-ke7-rpmRpvP7Y8C_w5DEAcZzBpDyo9dxP3kbx9y2_kARqXxm8GwWwO2YQf4OSkXaTuQ3JEvS-mR5a_kuneOebZPAkVgA_N1SFhSDjZte1sQZZJ2B05bPqCbQS3zQHTKEAi3LxdPmr3siN3ALBHonAojubEnXBsLwEk9NLgi_GeJoJL71aXCQHnNpo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+</div>
+<a class="px-8 py-3 rounded-full border border-[#0071e3] text-[#0071e3] font-medium hover:bg-[#0071e3] hover:text-white transition-all duration-300" href="#">
+                우수사례 알아보기 &gt;
+            </a>
+</div>
+</section>
+<!-- AI Toolbox Grid (Binary Rhythm: Light Grey) -->
+<section class="bg-[#f5f5f7] py-24 px-6 md:px-12">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col mb-16 gap-2">
+<span class="text-[12px] font-semibold tracking-wider uppercase text-[#0071e3]">Collection</span>
+<h2 class="text-[48px] font-semibold tracking-tight text-[#1d1d1f]">AI 공구상자</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Card 1 -->
+<div class="bg-white p-10 rounded-2xl custom-shadow group hover:scale-[1.02] transition-transform duration-500 flex flex-col justify-between h-[320px]">
+<div>
+<span class="material-symbols-outlined text-zinc-400 mb-6 block text-4xl" data-icon="edit_note">edit_note</span>
+<h3 class="text-[28px] font-semibold text-[#1d1d1f]">보도자료 초안</h3>
+<p class="mt-2 text-zinc-500 max-w-sm">주요 정책 및 행사 보도자료를 AI가 정교하게 초안을 작성합니다.</p>
+</div>
+<a class="text-[14px] font-semibold text-[#0071e3] hover:underline transition-all" href="#">도구 실행하기 &gt;</a>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-10 rounded-2xl custom-shadow group hover:scale-[1.02] transition-transform duration-500 flex flex-col justify-between h-[320px]">
+<div>
+<span class="material-symbols-outlined text-zinc-400 mb-6 block text-4xl" data-icon="image">image</span>
+<h3 class="text-[28px] font-semibold text-[#1d1d1f]">이미지 생성</h3>
+<p class="mt-2 text-zinc-500 max-w-sm">홍보물 및 시각 자료를 위한 고품질 행정 이미지를 생성합니다.</p>
+</div>
+<a class="text-[14px] font-semibold text-[#0071e3] hover:underline transition-all" href="#">도구 실행하기 &gt;</a>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-10 rounded-2xl custom-shadow group hover:scale-[1.02] transition-transform duration-500 flex flex-col justify-between h-[320px]">
+<div>
+<span class="material-symbols-outlined text-zinc-400 mb-6 block text-4xl" data-icon="summarize">summarize</span>
+<h3 class="text-[28px] font-semibold text-[#1d1d1f]">회의록 요약</h3>
+<p class="mt-2 text-zinc-500 max-w-sm">복잡한 회의 내용을 핵심 요점 위주로 일목요연하게 요약합니다.</p>
+</div>
+<a class="text-[14px] font-semibold text-[#0071e3] hover:underline transition-all" href="#">도구 실행하기 &gt;</a>
+</div>
+<!-- Card 4 -->
+<div class="bg-white p-10 rounded-2xl custom-shadow group hover:scale-[1.02] transition-transform duration-500 flex flex-col justify-between h-[320px]">
+<div>
+<span class="material-symbols-outlined text-zinc-400 mb-6 block text-4xl" data-icon="spellcheck">spellcheck</span>
+<h3 class="text-[28px] font-semibold text-[#1d1d1f]">공문서 빨간펜</h3>
+<p class="mt-2 text-zinc-500 max-w-sm">공문서의 어법, 양식 및 완성도를 AI가 실시간으로 검토합니다.</p>
+</div>
+<a class="text-[14px] font-semibold text-[#0071e3] hover:underline transition-all" href="#">도구 실행하기 &gt;</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Section (Binary Rhythm: Dark) -->
+<section class="bg-black py-32 px-6">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+<div class="flex-1 space-y-8">
+<h2 class="text-[48px] font-semibold text-white tracking-tight hero-title">행정 효율의 극대화.</h2>
+<p class="text-zinc-400 text-[19px] leading-relaxed max-w-lg">
+                    하남시 AI 라이브러리는 단순한 도구의 모음이 아닙니다. 데이터 기반의 의사결정과 지능형 자동화를 통해 시민들에게 더 나은 서비스를 제공하기 위한 행정 플랫폼입니다.
+                </p>
+<div class="flex gap-8">
+<div class="flex flex-col">
+<span class="text-4xl font-bold text-white">40%</span>
+<span class="text-[12px] text-zinc-500 uppercase tracking-widest mt-1">Efficiency Gain</span>
+</div>
+<div class="flex flex-col">
+<span class="text-4xl font-bold text-white">24/7</span>
+<span class="text-[12px] text-zinc-500 uppercase tracking-widest mt-1">Available Support</span>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full aspect-square rounded-2xl overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="abstract metallic shapes interlocking and floating in a dark minimalist space with dramatic soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFnn-OlMNt-psxGwrCf2kRu0E6TtbF-Fv1wCbM9mcfThu_Q6vv1C2ioEU2Mp-She68btjwSkmOiI60EADKZPI3YQ-s29s0nGo__r-8ejiBLDPuqd_ywojQgL94A0UAEghpQyUqxGKYgtUDA8EaegfYHP6_TO-U0BGwf_hnW5vPDWGr27NwQcBbL5Ae565fOeELiaxvd1_jnEIyPZg-AOqa4oDsg4IHZeix2rMmuF_L6o9pRmdEyCHMbaHjS_dVQN-o85ieXhGgBeU"/>
+</div>
+</div>
+</section>
+<!-- Footer (Shared Component) -->
+<footer class="bg-zinc-100 dark:bg-black w-full py-12 px-12 border-t border-zinc-200 dark:border-zinc-800">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto">
+<div class="mb-6 md:mb-0">
+<p class="font-['SF_Pro'] text-[12px] font-medium text-zinc-500 opacity-80">
+                    © Hanam City AI Library. Editorial Authority via The Digital Curator.
+                </p>
+</div>
+<div class="flex gap-8">
+<a class="font-['SF_Pro'] text-[12px] font-medium text-zinc-500 hover:text-blue-600 transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="font-['SF_Pro'] text-[12px] font-medium text-zinc-500 hover:text-blue-600 transition-colors duration-200" href="#">Terms of Service</a>
+<a class="font-['SF_Pro'] text-[12px] font-medium text-zinc-500 hover:text-blue-600 transition-colors duration-200" href="#">Administrative Guidelines</a>
+</div>
+</div>
+</footer>
+</body></html>
