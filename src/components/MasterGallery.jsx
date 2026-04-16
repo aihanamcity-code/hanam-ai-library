@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBoard } from '../context/BoardContext';
 import { useSwipe } from '../hooks/useSwipe';
+import ImageLightbox from './ImageLightbox';
 
 // ── Helpers ──
 function formatFileSize(bytes) {
@@ -218,6 +219,7 @@ export default function MasterGallery() {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(null); // null = 닫힘
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('latest');
 
@@ -366,8 +368,18 @@ export default function MasterGallery() {
             <div {...swipeHandlers} className={`w-full md:w-3/5 bg-black relative flex items-center justify-center group shrink-0 aspect-square md:aspect-auto md:h-full overflow-hidden ${(!liveSelected.images || liveSelected.images.length === 0) ? 'hidden md:flex' : ''}`}>
               {liveSelected.images && liveSelected.images.length > 0 ? (
                 <>
-                  <div className="w-full h-full p-0 md:p-4 pb-0 flex items-center justify-center">
+                  {/* 이미지 클릭 → 라이트박스 오픈 */}
+                  <div
+                    className="w-full h-full p-0 md:p-4 pb-0 flex items-center justify-center cursor-zoom-in"
+                    onClick={(e) => { e.stopPropagation(); setLightboxIndex(currentImgIndex); }}
+                    title="클릭하면 이미지를 크게 볼 수 있습니다"
+                  >
                     <img src={liveSelected.images[currentImgIndex]} alt="Gallery" className="w-full h-full object-contain animate-in fade-in zoom-in duration-300 drop-shadow-2xl" key={currentImgIndex} />
+                  </div>
+                  {/* 확대 힌트 배지 */}
+                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/50 text-[11px] flex items-center gap-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="material-symbols-outlined text-[13px]">zoom_in</span>
+                    클릭하여 확대
                   </div>
                   {liveSelected.images.length > 1 && (
                     <>
@@ -466,6 +478,15 @@ export default function MasterGallery() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* ── Image Lightbox ── */}
+      {lightboxIndex !== null && liveSelected?.images?.length > 0 && (
+        <ImageLightbox
+          images={liveSelected.images}
+          startIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       )}
     </div>
   );

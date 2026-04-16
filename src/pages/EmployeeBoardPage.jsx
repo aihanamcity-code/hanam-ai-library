@@ -217,10 +217,13 @@ function DetailModal({ post, isOpen, onClose }) {
                   className="relative w-full rounded-2xl overflow-hidden border border-white/10 group cursor-zoom-in bg-black/50"
                   onClick={() => setSelectedImageUrl(url)}
                 >
-                  <img src={url} alt={`첨부 이미지 ${i + 1}`} className="w-full h-auto max-h-[600px] object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+                  <img src={url} alt={`첨부 이미지 ${i + 1}`} loading="lazy" className="w-full h-auto max-h-[600px] object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
                   
                   {/* 호버 오버레이 (안내 문구 및 돋보기 아이콘) */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
+                  <div 
+                    onClick={(e) => { e.stopPropagation(); setSelectedImageUrl(url); }}
+                    className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-zoom-in"
+                  >
                     <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center mb-3 shadow-2xl scale-50 group-hover:scale-100 transition-transform duration-300">
                       <span className="material-symbols-outlined text-white text-3xl">zoom_in</span>
                     </div>
