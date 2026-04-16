@@ -16,8 +16,8 @@ export default function ImageModal({ isOpen, imageUrl, onClose }) {
       onClick={onClose}
     >
       <button 
-        onClick={onClose}
-        className="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 flex items-center justify-center rounded-full bg-black/50 border border-white/10 text-white/70 hover:text-white hover:bg-white/20 transition-all z-10"
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        className="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 flex items-center justify-center rounded-full bg-black/50 border border-white/10 text-white/70 hover:text-white hover:bg-white/20 transition-all z-50"
       >
         <span className="material-symbols-outlined text-2xl">close</span>
       </button>
