@@ -11,12 +11,12 @@ export default function ImageModal({ isOpen, imageUrl, onClose }) {
   if (!isOpen || !imageUrl) return null;
 
   return (
-    <div className="fixed inset-0 z-[99999] animate-in fade-in duration-300">
-      {/* [레이어 1] 배경 오버레이 (클릭 시 닫힘) */}
-      <div 
-        className="absolute inset-0 bg-black/90 cursor-pointer" 
-        onClick={onClose}
-      ></div>
+    <div 
+      className="fixed inset-0 z-[99999] animate-in fade-in duration-300"
+      onClick={onClose}
+    >
+      {/* [레이어 1] 배경 오버레이 */}
+      <div className="absolute inset-0 bg-black/90 cursor-pointer"></div>
 
       {/* [레이어 2] 이미지 컨테이너 (컨테이너는 클릭 통과, 이미지 자체는 버블링 차단) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

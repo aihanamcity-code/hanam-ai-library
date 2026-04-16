@@ -148,13 +148,12 @@ function WriteModal({ isOpen, onClose, activeTab, onSubmit }) {
   );
 }
 
-function DetailModal({ post, isOpen, onClose }) {
+function DetailModal({ post, isOpen, onClose, onImageClick }) {
   const { isAdmin, addComment, voteBoardPost, voteComment, getVoteState, editBoardPost, deleteBoardPost } = useBoard();
   const [commentText, setCommentText] = useState('');
   const [editing, setEditing] = useState(false);
   const [eTitle, setETitle] = useState('');
   const [eContent, setEContent] = useState('');
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
 
   if (!isOpen || !post) return null;
   const postVote = getVoteState('post', post.id);
@@ -215,13 +214,13 @@ function DetailModal({ post, isOpen, onClose }) {
                 <div 
                   key={i} 
                   className="relative w-full rounded-2xl overflow-hidden border border-white/10 group cursor-zoom-in bg-black/50"
-                  onClick={() => setSelectedImageUrl(url)}
+                  onClick={() => onImageClick(url)}
                 >
                   <img src={url} alt={`첨부 이미지 ${i + 1}`} loading="lazy" className="w-full h-auto max-h-[600px] object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
                   
                   {/* 호버 오버레이 (안내 문구 및 돋보기 아이콘) */}
                   <div 
-                    onClick={(e) => { e.stopPropagation(); setSelectedImageUrl(url); }}
+                    onClick={(e) => { e.stopPropagation(); onImageClick(url); }}
                     className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-zoom-in"
                   >
                     <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center mb-3 shadow-2xl scale-50 group-hover:scale-100 transition-transform duration-300">
@@ -274,13 +273,6 @@ function DetailModal({ post, isOpen, onClose }) {
           </div>
         </div>
       </div>
-
-      {/* ── Image Modal ── */}
-      <ImageModal
-        isOpen={!!selectedImageUrl}
-        imageUrl={selectedImageUrl}
-        onClose={() => setSelectedImageUrl(null)}
-      />
     </div>
   );
 }
@@ -328,6 +320,7 @@ export default function EmployeeBoardPage() {
   const [writeModalOpen, setWriteModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null); // 최상위로 상태 끌어올림
 
   const processedPosts = useMemo(() => {
     return boardPosts
@@ -401,8 +394,23 @@ export default function EmployeeBoardPage() {
       </button>
 
       <WriteModal isOpen={writeModalOpen} onClose={() => setWriteModalOpen(false)} activeTab={activeTab} onSubmit={addBoardPost} />
-      <DetailModal post={liveSelectedPost} isOpen={!!selectedPost} onClose={() => setSelectedPost(null)} />
+      
+      {/* ── 변경: onImageClick 프롭스로 메소드 전달 ── */}
+      <DetailModal 
+        post={liveSelectedPost} 
+        isOpen={!!selectedPost} 
+        onClose={() => setSelectedPost(null)} 
+        onImageClick={setSelectedImageUrl} 
+      />
+      
       <AdminPendingModal isOpen={adminModalOpen} onClose={() => setAdminModalOpen(false)} />
+
+      {/* ── 변경: ImageModal이 최상위 루트로 이동 ── */}
+      <ImageModal
+        isOpen={!!selectedImageUrl}
+        imageUrl={selectedImageUrl}
+        onClose={() => setSelectedImageUrl(null)}
+      />
     </div>
   );
 }
