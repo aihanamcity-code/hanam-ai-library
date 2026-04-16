@@ -47,7 +47,7 @@ export default function ImageLightbox({ images, startIndex = 0, onClose }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="fixed inset-0 z-[9999]"
       aria-modal="true"
       role="dialog"
     >
@@ -58,19 +58,9 @@ export default function ImageLightbox({ images, startIndex = 0, onClose }) {
         aria-label="닫기"
       />
 
-      {/* ── 닫기 버튼 ── */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-50 w-11 h-11 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all active:scale-90 shadow-xl backdrop-blur-md"
-        title="닫기 (ESC)"
-        aria-label="라이트박스 닫기"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <span className="material-symbols-outlined text-2xl">close</span>
-      </button>
-
       {/* ── 이미지 뷰어 영역 ── */}
-      <div className="relative z-[5] w-full h-full flex flex-col items-center justify-center p-4 md:p-10 select-none">
+      {/* 핵심 수정: top-16으로 닫기 버튼 영역(상단 64px)을 물리적으로 침범 불가하게 설정 */}
+      <div className="absolute top-16 bottom-0 left-0 right-0 flex flex-col items-center justify-center p-4 md:p-10 select-none">
 
         {/* ZoomableImage 활용 */}
         <div
@@ -124,13 +114,35 @@ export default function ImageLightbox({ images, startIndex = 0, onClose }) {
           </div>
         )}
 
-        {/* ── 이미지 카운터 (우상단) ── */}
+        {/* ── 이미지 카운터 (좌상단) ── */}
         {canNav && (
           <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/70 text-[13px] font-medium">
             {idx + 1} / {total}
           </div>
         )}
       </div>
+
+      {/* ── 닫기 버튼 ── */}
+      {/* 핵심 수정: DOM 최하단 배치 + fixed 포지셔닝으로 어떤 형제 요소와도 독립 */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        onMouseDown={(e) => e.stopPropagation()}
+        style={{
+          position: 'fixed',
+          top: '16px',
+          right: '16px',
+          zIndex: 99999,
+          pointerEvents: 'auto',
+        }}
+        className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all active:scale-90 shadow-xl backdrop-blur-md cursor-pointer"
+        title="닫기 (ESC)"
+        aria-label="라이트박스 닫기"
+      >
+        <span className="material-symbols-outlined text-2xl">close</span>
+      </button>
 
       {/* 인라인 애니메이션 keyframes */}
       <style>{`
