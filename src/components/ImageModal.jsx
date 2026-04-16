@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 export default function ImageModal({ isOpen, imageUrl, onClose }) {
   useEffect(() => {
@@ -9,34 +10,62 @@ export default function ImageModal({ isOpen, imageUrl, onClose }) {
 
   if (!isOpen || !imageUrl) return null;
 
-  return (
+  // createPortal: 컴포넌트 위치와 무관하게 document.body에 직접 마운트
+  // 어떠한 stacking context, z-index, overflow 제약도 돌파함
+  return ReactDOM.createPortal(
     <div
-      style={{ pointerEvents: 'auto' }}
-      className="fixed inset-0 z-[99999]"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        pointerEvents: 'auto',
+      }}
     >
-      {/* [레이어 1] 배경 오버레이 - 직접 onClick 연결 */}
+      {/* [레이어 1] 배경 오버레이 */}
       <div
-        className="absolute inset-0 bg-black/90"
-        style={{ cursor: 'pointer' }}
         onClick={onClose}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          cursor: 'pointer',
+        }}
       />
 
-      {/* [레이어 2] 이미지 - w-auto h-auto로 화면 전체를 침범하지 않도록 크기 제한 */}
+      {/* [레이어 2] 이미지 */}
       <div
-        className="absolute inset-0 flex items-center justify-center"
-        style={{ pointerEvents: 'none' }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          pointerEvents: 'none',
+        }}
       >
         <img
           src={imageUrl}
           alt="확대 이미지"
-          style={{ pointerEvents: 'auto', cursor: 'default', maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain' }}
           onClick={(e) => e.stopPropagation()}
+          style={{
+            maxWidth: '90vw',
+            maxHeight: '85vh',
+            objectFit: 'contain',
+            pointerEvents: 'auto',
+            cursor: 'default',
+            boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
+          }}
         />
       </div>
 
-      {/* [레이어 3] 닫기 버튼 - DOM 맨 마지막, id 부여, console.log 포함 */}
+      {/* [레이어 3] 닫기 버튼 */}
       <button
         id="modal-close-button"
+        onClick={(e) => {
+          console.log("닫기 버튼 눌림");
+          e.stopPropagation();
+          onClose();
+        }}
         style={{
           position: 'absolute',
           top: '24px',
@@ -48,22 +77,17 @@ export default function ImageModal({ isOpen, imageUrl, onClose }) {
           height: '56px',
           borderRadius: '50%',
           background: 'rgba(0,0,0,0.6)',
-          border: '1px solid rgba(255,255,255,0.2)',
+          border: '1px solid rgba(255,255,255,0.25)',
           color: 'white',
+          fontSize: '22px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '28px',
-          lineHeight: 1,
-        }}
-        onClick={(e) => {
-          console.log("닫기 버튼 눌림");
-          e.stopPropagation();
-          onClose();
         }}
       >
         ✕
       </button>
-    </div>
+    </div>,
+    document.body // React 컴포넌트 트리를 완전히 탈출, body에 직접 마운트
   );
 }
