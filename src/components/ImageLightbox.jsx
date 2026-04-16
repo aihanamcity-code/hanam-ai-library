@@ -61,15 +61,16 @@ export default function ImageLightbox({ images, startIndex = 0, onClose }) {
       {/* ── 닫기 버튼 ── */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all active:scale-90 shadow-xl backdrop-blur-md"
+        className="absolute top-4 right-4 z-50 w-11 h-11 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all active:scale-90 shadow-xl backdrop-blur-md"
         title="닫기 (ESC)"
         aria-label="라이트박스 닫기"
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <span className="material-symbols-outlined text-2xl">close</span>
       </button>
 
       {/* ── 이미지 뷰어 영역 ── */}
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4 md:p-10 select-none">
+      <div className="relative z-[5] w-full h-full flex flex-col items-center justify-center p-4 md:p-10 select-none">
 
         {/* ZoomableImage 활용 */}
         <div
